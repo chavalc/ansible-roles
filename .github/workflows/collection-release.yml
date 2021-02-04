@@ -10,13 +10,13 @@ jobs:
   build:
     runs-on: ubuntu-latest
     if: "contains(github.event.head_commit.message, 'test')"
-    env:
-      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
     steps:
       - uses: act10ns/slack@v1
         with:
           status: starting
           channel: '#collection_release'
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
         if: always()
 
       - name: Random task
@@ -78,4 +78,6 @@ jobs:
           status: ${{ job.status }}
           steps: ${{ toJson(steps) }}
           channel: '#collection_release'
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
         if: always()
